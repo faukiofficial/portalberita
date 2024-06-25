@@ -33,7 +33,7 @@ class Home extends React.Component {
     this.setState({ loading: true });
 
     fetch(
-      "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=85fb02859de646ebb09c2df399e91f97"
+      `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=85fb02859de646ebb09c2df399e91f97`
     )
       .then((response) => {
         if (!response.ok) {
