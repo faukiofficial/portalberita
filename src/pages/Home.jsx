@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import Header from "../elements/Header";
 import Input from "../elements/Input";
 import Loading from "../elements/Loading";
@@ -33,12 +32,17 @@ class Home extends React.Component {
   fetchNews(searchString = "") {
     this.setState({ loading: true });
 
-    axios
-      .get(
-        "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=85fb02859de646ebb09c2df399e91f97"
-      )
+    fetch(
+      "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=85fb02859de646ebb09c2df399e91f97"
+    )
       .then((response) => {
-        let articles = response.data.articles;
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        let articles = data.articles;
         if (searchString) {
           articles = articles.filter((article) =>
             article.title.toLowerCase().includes(searchString.toLowerCase())
